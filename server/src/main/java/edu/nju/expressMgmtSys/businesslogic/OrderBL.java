@@ -4,11 +4,10 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import edu.nju.expressMgmtSys.model.ExpressOrder;
 import edu.nju.expressMgmtSys.vo.OrderReadVO;
 import edu.nju.expressMgmtSys.vo.OrderWriteVO;
 
-public interface OrderBL extends Remote{
+public interface OrderBL extends Remote {
 
     void addExpressOrder(OrderWriteVO orderVO) throws RemoteException;
 

@@ -9,7 +9,6 @@ import edu.nju.expressMgmtSys.dataservice.CommodityDataService;
 import edu.nju.expressMgmtSys.dataservice.CustomerDataService;
 import edu.nju.expressMgmtSys.dataservice.OrderDataService;
 import edu.nju.expressMgmtSys.dataservice.factory.DataServiceFactory;
-import edu.nju.expressMgmtSys.dataservice.factory.impl.DataServiceMemoryFactory;
 import edu.nju.expressMgmtSys.businesslogic.OrderBL;
 import edu.nju.expressMgmtSys.dataservice.factory.impl.DataServiceSerializableFactory;
 import edu.nju.expressMgmtSys.po.CommodityPO;
