@@ -1,8 +1,11 @@
-package edu.nju.expressMgmtSys.model.po;
+package edu.nju.expressMgmtSys.po;
 
 import edu.nju.expressMgmtSys.model.ExpressType;
 
-public class OrderPO {
+import java.io.Serializable;
+
+public class OrderPO implements Serializable{
+    private static final long serialVersionUID = 554535963678753905L;
 
     private String barcode;
 

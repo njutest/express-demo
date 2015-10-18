@@ -2,8 +2,7 @@ package edu.nju.expressMgmtSys.dataservice;
 
 import java.util.List;
 
-import edu.nju.expressMgmtSys.model.ExpressOrder;
-import edu.nju.expressMgmtSys.model.po.OrderPO;
+import edu.nju.expressMgmtSys.po.OrderPO;
 
 public interface OrderDataService {
 

@@ -11,9 +11,10 @@ import edu.nju.expressMgmtSys.dataservice.OrderDataService;
 import edu.nju.expressMgmtSys.dataservice.factory.DataServiceFactory;
 import edu.nju.expressMgmtSys.dataservice.factory.impl.DataServiceMemoryFactory;
 import edu.nju.expressMgmtSys.businesslogic.OrderBL;
-import edu.nju.expressMgmtSys.model.po.CommodityPO;
-import edu.nju.expressMgmtSys.model.po.CustomerPO;
-import edu.nju.expressMgmtSys.model.po.OrderPO;
+import edu.nju.expressMgmtSys.dataservice.factory.impl.DataServiceSerializableFactory;
+import edu.nju.expressMgmtSys.po.CommodityPO;
+import edu.nju.expressMgmtSys.po.CustomerPO;
+import edu.nju.expressMgmtSys.po.OrderPO;
 import edu.nju.expressMgmtSys.vo.OrderReadVO;
 import edu.nju.expressMgmtSys.vo.OrderWriteVO;
 
@@ -26,7 +27,7 @@ public class OrderBLImpl extends UnicastRemoteObject implements OrderBL {
     public OrderBLImpl() throws RemoteException {
         super();
 
-        DataServiceFactory dataServiceFactory = new DataServiceMemoryFactory();
+        DataServiceFactory dataServiceFactory = new DataServiceSerializableFactory();
         orderDS = dataServiceFactory.getOrderDataService();
         customerDS = dataServiceFactory.getCustomerDataService();
         commodityDS = dataServiceFactory.getCommodityDataService();

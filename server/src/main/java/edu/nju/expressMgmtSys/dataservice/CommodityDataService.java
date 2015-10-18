@@ -1,12 +1,10 @@
 package edu.nju.expressMgmtSys.dataservice;
 
-import edu.nju.expressMgmtSys.model.po.CommodityPO;
-import edu.nju.expressMgmtSys.model.po.CustomerPO;
+import edu.nju.expressMgmtSys.po.CommodityPO;
 
 public interface CommodityDataService {
 
     /**
-     * @param commodityPO
      * @return commodity id;
      */
     int addCommodity(CommodityPO commodityPO);

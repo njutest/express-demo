@@ -1,9 +1,9 @@
-package edu.nju.expressMgmtSys.model.po;
+package edu.nju.expressMgmtSys.po;
 
 import java.io.Serializable;
 
-public class CustomerPO {
-    private static final long serialVersionUID = 7346182571696044900L;
+public class CustomerPO implements Serializable{
+    private static final long serialVersionUID = 2044100062155888758L;
 
     private int customerId;
     private String name;
@@ -22,6 +22,10 @@ public class CustomerPO {
 
     public void setId(int id) {
         this.customerId = id;
+    }
+
+    public int getId() {
+        return customerId;
     }
 
     public String getName() {
@@ -58,4 +62,5 @@ public class CustomerPO {
     public int hashCode() {
         return new Integer(customerId).hashCode();
     }
+
 }

@@ -1,6 +1,10 @@
-package edu.nju.expressMgmtSys.model.po;
+package edu.nju.expressMgmtSys.po;
 
-public class CommodityPO {
+import java.io.Serializable;
+
+public class CommodityPO implements Serializable{
+    private static final long serialVersionUID = 2971979796382568993L;
+
     private int commodityId;
     private int nums;
     private int weight;
@@ -16,6 +20,10 @@ public class CommodityPO {
 
     public void setId(int id) {
         this.commodityId = id;
+    }
+
+    public int getId() {
+        return commodityId;
     }
 
     public int getNums() {

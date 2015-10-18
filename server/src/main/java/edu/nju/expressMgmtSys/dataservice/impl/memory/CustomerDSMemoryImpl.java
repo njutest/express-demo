@@ -1,8 +1,7 @@
 package edu.nju.expressMgmtSys.dataservice.impl.memory;
 
 import edu.nju.expressMgmtSys.dataservice.CustomerDataService;
-import edu.nju.expressMgmtSys.model.po.CommodityPO;
-import edu.nju.expressMgmtSys.model.po.CustomerPO;
+import edu.nju.expressMgmtSys.po.CustomerPO;
 
 import java.util.HashMap;
 import java.util.Map;
