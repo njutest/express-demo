@@ -1,4 +1,4 @@
-package edu.nju.expressMgmtSys.view;
+package edu.nju.expressMgmtSys.presentation;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;

@@ -1,19 +1,19 @@
-package edu.nju.expressMgmtSys.client;
+package edu.nju.expressMgmtSys.util;
+
+import edu.nju.expressMgmtSys.businesslogic.OrderBL;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import edu.nju.expressMgmtSys.service.OrderService;
-
 public class RMIHelper {
     private static final String IP = "localhost";//Can be read from config file
-    private static OrderService orderService;
+    private static OrderBL orderBL;
 
     public static void init() {
         try {
-            orderService =  (OrderService) Naming.lookup("rmi://" + IP + "/order-service");
+            orderBL =  (OrderBL) Naming.lookup("rmi://" + IP + "/order-businesslogic");
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -24,7 +24,7 @@ public class RMIHelper {
         }
     }
 
-    public static OrderService getOrderService() {
-        return orderService;
+    public static OrderBL getOrderBL() {
+        return orderBL;
     }
 }

@@ -1,4 +1,4 @@
-package edu.nju.expressMgmtSys.view;
+package edu.nju.expressMgmtSys.presentation;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -11,27 +11,25 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import edu.nju.expressMgmtSys.client.RMIHelper;
-import edu.nju.expressMgmtSys.model.ExpressOrder;
-import edu.nju.expressMgmtSys.service.OrderService;
+import edu.nju.expressMgmtSys.businesslogic.OrderBL;
+import edu.nju.expressMgmtSys.util.RMIHelper;
+import edu.nju.expressMgmtSys.vo.OrderReadVO;
 
 public class ShowOrderPanel extends JPanel{
     private static final String[] TABLE_HEADER = new String[] {
             "Order ID", "Sender", "Receiver", "Commodity", "Type", "Pakcaging Fee", "Price"};
 
-    private JTable orderListTable;
     private DefaultTableModel defaultTableModel;
-    private JButton addButton;
 
-    private OrderService orderService;
+    private OrderBL orderBL;
 
     public ShowOrderPanel() {
-        orderService = RMIHelper.getOrderService();
+        orderBL = RMIHelper.getOrderBL();
 
         Object[][] orders = getOrders();
         defaultTableModel = new DefaultTableModel(orders, TABLE_HEADER);
-        orderListTable = new JTable(defaultTableModel);
-        addButton = new JButton("add");
+        JTable orderListTable = new JTable(defaultTableModel);
+        JButton addButton = new JButton("add");
 
         addButton.addActionListener(new ActionListener() {
             @Override
@@ -48,11 +46,10 @@ public class ShowOrderPanel extends JPanel{
     public void refresh() {
 		Object[][] orders = getOrders();
 		defaultTableModel.setDataVector(orders, TABLE_HEADER);
-//		this.validate();
 	}
 
     private Object[][] getOrders() {
-        List<ExpressOrder> expressOrders = orderService.getExpressOrders();
+        List<OrderReadVO> expressOrders = orderBL.getExpressOrders();
 
         Object[][] orders = new Object[expressOrders.size()][];
         for (int i = 0; i < expressOrders.size(); i++) {
@@ -62,15 +59,15 @@ public class ShowOrderPanel extends JPanel{
         return orders;
     }
 
-    private Object[] changeToAnObject(ExpressOrder expressOrder) {
+    private Object[] changeToAnObject(OrderReadVO orderReadVO) {
         Object[] order = new Object[TABLE_HEADER.length];
-        order[0] = expressOrder.getBarcode();
-        order[1] = expressOrder.getSender().getName();
-        order[2] = expressOrder.getReceiver().getName();
-        order[3] = expressOrder.getCommodity().getName();
-        order[4] = expressOrder.getType();
-        order[5] = expressOrder.getPackagingFee();
-        order[6] = expressOrder.getTotalPrice();
+        order[0] = orderReadVO.barcode;
+        order[1] = orderReadVO.senderName;
+        order[2] = orderReadVO.receiverName;
+        order[3] = orderReadVO.commodityName;
+        order[4] = orderReadVO.type;
+        order[5] = orderReadVO.packagingFee;
+        order[6] = orderReadVO.totalPrice;
         return order;
     }
 }

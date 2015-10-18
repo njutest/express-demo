@@ -1,5 +1,7 @@
 package edu.nju.expressMgmtSys.server;
 
+import edu.nju.expressMgmtSys.util.RMIHelper;
+
 public class Server {
 
     public static void main(String[] args) {

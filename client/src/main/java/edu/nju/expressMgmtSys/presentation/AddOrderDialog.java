@@ -1,4 +1,4 @@
-package edu.nju.expressMgmtSys.view;
+package edu.nju.expressMgmtSys.presentation;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,16 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import edu.nju.expressMgmtSys.client.RMIHelper;
-import edu.nju.expressMgmtSys.model.Commodity;
-import edu.nju.expressMgmtSys.model.Customer;
-import edu.nju.expressMgmtSys.model.ExpressOrder;
 import edu.nju.expressMgmtSys.model.ExpressType;
-import edu.nju.expressMgmtSys.service.OrderService;
+import edu.nju.expressMgmtSys.businesslogic.OrderBL;
+import edu.nju.expressMgmtSys.util.RMIHelper;
+import edu.nju.expressMgmtSys.vo.CommodityVO;
+import edu.nju.expressMgmtSys.vo.CustomerVO;
+import edu.nju.expressMgmtSys.vo.OrderWriteVO;
 
-/**
- * Created by hazel on 2015-10-07.
- */
 public class AddOrderDialog extends JDialog{
 	private ShowOrderPanel parent;
 
@@ -71,14 +68,14 @@ public class AddOrderDialog extends JDialog{
 			String senderCompany = senderPanel.companyTextField.getText();
 			String senderTelephone = senderPanel.teleTextField.getText();
 			String senderMobile = senderPanel.mobileTextField.getText();
-			Customer sender = new Customer(senderName, senderAddress, senderCompany, senderTelephone, senderMobile);
+			CustomerVO sender = new CustomerVO(senderName, senderAddress, senderCompany, senderTelephone, senderMobile);
 
 			String receiverName = receiverPanel.nameTextField.getText();
 			String receiverAddress = receiverPanel.addressTextField.getText();
 			String receiverCompany = receiverPanel.companyTextField.getText();
 			String receiverTelephone = receiverPanel.teleTextField.getText();
 			String receiverMobile = receiverPanel.mobileTextField.getText();
-			Customer receiver = new Customer(receiverName, receiverAddress, receiverCompany, receiverTelephone, receiverMobile);
+			CustomerVO receiver = new CustomerVO(receiverName, receiverAddress, receiverCompany, receiverTelephone, receiverMobile);
 			
 			String commodityNumberString = commodityPanel.numsTextField.getText();
 			int commodityNumber = Integer.parseInt(commodityNumberString);
@@ -87,7 +84,7 @@ public class AddOrderDialog extends JDialog{
 			String commodityVolumeString = commodityPanel.volumeTextFiled.getText();
 			int commodityVolume = Integer.parseInt(commodityVolumeString);
 			String commodityName = commodityPanel.nameTextFiled.getText();
-			Commodity commodity = new Commodity(commodityNumber, commodityWeight, commodityVolume, commodityName);
+			CommodityVO commodity = new CommodityVO(commodityNumber, commodityWeight, commodityVolume, commodityName);
 			
 			String barcode = expressInfoPanel.barcodeTextField.getText();
 			ExpressType type = (ExpressType) expressInfoPanel.typeComboBox.getSelectedItem();
@@ -96,9 +93,9 @@ public class AddOrderDialog extends JDialog{
 			
 			int totalPrice = fee;//???
 			
-			ExpressOrder order = new ExpressOrder(barcode, sender, receiver, commodity, type, fee, totalPrice);
+			OrderWriteVO order = new OrderWriteVO(barcode, sender, receiver, commodity, type, fee, totalPrice);
 			
-			OrderService service = RMIHelper.getOrderService();
+			OrderBL service = RMIHelper.getOrderBL();
 			service.addExpressOrder(order);
 			parent.refresh();
 			AddOrderDialog.this.dispose();

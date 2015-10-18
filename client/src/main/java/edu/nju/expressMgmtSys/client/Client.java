@@ -1,6 +1,7 @@
 package edu.nju.expressMgmtSys.client;
 
-import edu.nju.expressMgmtSys.view.ClientFrame;
+import edu.nju.expressMgmtSys.util.RMIHelper;
+import edu.nju.expressMgmtSys.presentation.ClientFrame;
 
 public class Client {
 
