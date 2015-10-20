@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import edu.nju.expressMgmtSys.model.ExpressType;
+import edu.nju.expressMgmtSys.common.ExpressType;
 import edu.nju.expressMgmtSys.businesslogic.OrderBL;
 import edu.nju.expressMgmtSys.util.RMIHelper;
 import edu.nju.expressMgmtSys.vo.CommodityVO;

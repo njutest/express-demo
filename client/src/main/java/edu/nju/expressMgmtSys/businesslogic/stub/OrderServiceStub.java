@@ -1,10 +1,7 @@
 package edu.nju.expressMgmtSys.businesslogic.stub;
 
 import edu.nju.expressMgmtSys.businesslogic.OrderBL;
-import edu.nju.expressMgmtSys.model.Commodity;
-import edu.nju.expressMgmtSys.model.Customer;
-import edu.nju.expressMgmtSys.model.ExpressOrder;
-import edu.nju.expressMgmtSys.model.ExpressType;
+import edu.nju.expressMgmtSys.common.ExpressType;
 import edu.nju.expressMgmtSys.vo.OrderReadVO;
 import edu.nju.expressMgmtSys.vo.OrderWriteVO;
 

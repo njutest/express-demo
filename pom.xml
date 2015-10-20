@@ -15,7 +15,7 @@
 
   <modules>
     <module>client</module>
-    <module>model</module>
+    <module>common</module>
     <module>server</module>
   </modules>
 

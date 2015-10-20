@@ -5,7 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.nju.expressMgmtSys.model.ExpressType;
+import edu.nju.expressMgmtSys.common.ExpressType;
 import edu.nju.expressMgmtSys.businesslogic.OrderBL;
 import edu.nju.expressMgmtSys.vo.OrderReadVO;
 import edu.nju.expressMgmtSys.vo.OrderWriteVO;

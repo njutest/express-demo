@@ -1,4 +1,4 @@
-package edu.nju.expressMgmtSys.model;
+package edu.nju.expressMgmtSys.common;
 
 import java.io.Serializable;
 

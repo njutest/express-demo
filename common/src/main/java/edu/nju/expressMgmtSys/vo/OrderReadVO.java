@@ -1,6 +1,6 @@
 package edu.nju.expressMgmtSys.vo;
 
-import edu.nju.expressMgmtSys.model.ExpressType;
+import edu.nju.expressMgmtSys.common.ExpressType;
 
 import java.io.Serializable;
 
