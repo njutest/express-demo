@@ -16,11 +16,16 @@ public class RMIHelper {
 	
 	private static final int PORT = 1099;
 	
+	private static boolean inited = false;
+	
 	static{
 		NAMING_MAP.put("order-businesslogic", OrderBLImpl.class);
 	}
 	
-    public static void init() throws ServerInitException {
+    public synchronized static void init() throws ServerInitException {
+    	if(inited){
+    		return;
+    	}
         try {
             LocateRegistry.createRegistry(PORT);
             for(Entry<String, Class<? extends UnicastRemoteObject>> entry: NAMING_MAP.entrySet()){
@@ -29,6 +34,7 @@ public class RMIHelper {
             	UnicastRemoteObject proxy = clazz.newInstance();
             	Naming.rebind(name, proxy);
             }
+            inited = true;
         } catch (Exception e) {
         	throw new ServerInitException(e);
         } 

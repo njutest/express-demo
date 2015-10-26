@@ -7,14 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CustomerDSMemoryImpl implements CustomerDataService{
-    private Map<Integer, CustomerPO> customerPOs;
+   
+	private final Map<Integer, CustomerPO> customerPOs;
 
     public CustomerDSMemoryImpl() {
         customerPOs = new HashMap<>();
     }
 
     @Override
-    public int addCustomer(CustomerPO customerPO) {
+    public synchronized int addCustomer(CustomerPO customerPO) {
         int newId = customerPOs.size();
         customerPO.setId(newId);
         customerPOs.put(newId, customerPO);
@@ -22,7 +23,7 @@ public class CustomerDSMemoryImpl implements CustomerDataService{
     }
 
     @Override
-    public CustomerPO getCustomer(int id) {
+    public CustomerPO getCustomerById(int id) {
         return customerPOs.get(id);
     }
 }

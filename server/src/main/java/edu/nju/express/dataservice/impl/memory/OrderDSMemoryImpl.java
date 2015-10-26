@@ -1,13 +1,15 @@
 package edu.nju.express.dataservice.impl.memory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import edu.nju.express.dataservice.OrderDataService;
 import edu.nju.express.po.OrderPO;
 
 public class OrderDSMemoryImpl implements OrderDataService {
-    private List<OrderPO> orders;
+    
+	private final List<OrderPO> orders;
 
     public OrderDSMemoryImpl() {
         orders = new ArrayList<>();
@@ -20,6 +22,8 @@ public class OrderDSMemoryImpl implements OrderDataService {
 
     @Override
     public List<OrderPO> getOrders() {
-        return orders;
+    	List<OrderPO> other = new ArrayList<OrderPO>(orders.size());
+    	Collections.copy(other, orders);
+    	return other;
     }
 }

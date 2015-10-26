@@ -9,6 +9,6 @@ public interface CommodityDataService {
      */
     int addCommodity(CommodityPO commodityPO);
 
-    CommodityPO getCommodity(int id);
+    CommodityPO getCommodityById(int id);
 
 }

@@ -32,7 +32,7 @@ public class CustomerDSSerializableImpl implements CustomerDataService{
     }
 
     @Override
-    public CustomerPO getCustomer(int id) {
+    public CustomerPO getCustomerById(int id) {
         try {
             List<CustomerPO> customerPOs = getCustomers();
             for (CustomerPO customerPO : customerPOs) {

@@ -5,12 +5,11 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.nju.express.businesslogic.OrderBL;
 import edu.nju.express.dataservice.CommodityDataService;
 import edu.nju.express.dataservice.CustomerDataService;
 import edu.nju.express.dataservice.OrderDataService;
 import edu.nju.express.dataservice.factory.DataServiceFactory;
-import edu.nju.express.businesslogic.OrderBL;
-import edu.nju.express.dataservice.factory.impl.DataServiceSerializableFactory;
 import edu.nju.express.po.CommodityPO;
 import edu.nju.express.po.CustomerPO;
 import edu.nju.express.po.OrderPO;
@@ -26,7 +25,7 @@ public class OrderBLImpl extends UnicastRemoteObject implements OrderBL {
     public OrderBLImpl() throws RemoteException {
         super();
 
-        DataServiceFactory dataServiceFactory = new DataServiceSerializableFactory();
+        DataServiceFactory dataServiceFactory = DataServiceFactory.createFactory();
         orderDS = dataServiceFactory.getOrderDataService();
         customerDS = dataServiceFactory.getCustomerDataService();
         commodityDS = dataServiceFactory.getCommodityDataService();
@@ -60,9 +59,9 @@ public class OrderBLImpl extends UnicastRemoteObject implements OrderBL {
 
         List<OrderReadVO> orderReadVOs = new ArrayList<>();
         for (OrderPO orderPO : orderPOs) {
-            CustomerPO senderPO = customerDS.getCustomer(orderPO.getSenderId());
-            CustomerPO receiverPO = customerDS.getCustomer(orderPO.getReceiverId());
-            CommodityPO commodityPO = commodityDS.getCommodity(orderPO.getCommodityId());
+            CustomerPO senderPO = customerDS.getCustomerById(orderPO.getSenderId());
+            CustomerPO receiverPO = customerDS.getCustomerById(orderPO.getReceiverId());
+            CommodityPO commodityPO = commodityDS.getCommodityById(orderPO.getCommodityId());
 
             OrderReadVO orderReadVO = new OrderReadVO(orderPO.getBarcode(),
                     senderPO.getName(), receiverPO.getName(), commodityPO.getName(),

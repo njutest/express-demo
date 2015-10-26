@@ -7,14 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommodityDSMemoryImpl implements CommodityDataService{
-    private Map<Integer, CommodityPO> commodityPOs;
+	
+    private final Map<Integer, CommodityPO> commodityPOs;
 
     public CommodityDSMemoryImpl() {
         commodityPOs = new HashMap<>();
     }
 
     @Override
-    public int addCommodity(CommodityPO commodityPO) {
+    public synchronized int addCommodity(CommodityPO commodityPO) {
         int newId = commodityPOs.size();
         commodityPO.setId(newId);
         commodityPOs.put(newId, commodityPO);
@@ -22,7 +23,7 @@ public class CommodityDSMemoryImpl implements CommodityDataService{
     }
 
     @Override
-    public CommodityPO getCommodity(int id) {
+    public CommodityPO getCommodityById(int id) {
         return commodityPOs.get(id);
     }
 

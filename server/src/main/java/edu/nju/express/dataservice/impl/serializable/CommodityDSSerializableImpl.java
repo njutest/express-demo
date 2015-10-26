@@ -2,6 +2,7 @@ package edu.nju.express.dataservice.impl.serializable;
 
 import edu.nju.express.dataservice.CommodityDataService;
 import edu.nju.express.po.CommodityPO;
+import edu.nju.express.util.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,7 +11,8 @@ import java.util.List;
 public class CommodityDSSerializableImpl implements CommodityDataService{
 
     @Override
-    public int addCommodity(CommodityPO commodityPO) {
+    public synchronized int addCommodity(CommodityPO commodityPO) {
+    	Logger.info("add commodity");
         try {
             List<CommodityPO> commodityPOs = getCommodities();
             int id = commodityPOs.size();
@@ -18,21 +20,21 @@ public class CommodityDSSerializableImpl implements CommodityDataService{
             commodityPOs.add(commodityPO);
 
             File file = SerializableFileHelper.getCommodityFile();
-            ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream(file));
-            os.writeObject(commodityPOs);
-            os.flush();
-            os.close();
-            return id;
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+            try(ObjectOutputStream os = new ObjectOutputStream( new FileOutputStream(file))){
+            	os.writeObject(commodityPOs);
+            	Logger.info("success with id="+id);
+            	return id;
+            }
+        } catch (IOException e) {
+        	Logger.error("fail");
+        	Logger.exception(e);
         }
 
         return -1;
     }
 
     @Override
-    public CommodityPO getCommodity(int id) {
+    public CommodityPO getCommodityById(int id) {
         try {
             List<CommodityPO> commodityPOs = getCommodities();
             for (CommodityPO commodityPO : commodityPOs) {
@@ -40,23 +42,25 @@ public class CommodityDSSerializableImpl implements CommodityDataService{
                     return commodityPO;
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            Logger.exception(e);
         }
         return null;
     }
 
-    private List<CommodityPO> getCommodities() throws IOException, ClassNotFoundException {
+    private List<CommodityPO> getCommodities() throws IOException {
         File file = new File(SerializableFileHelper.DIRECTORY_PATH,
                 SerializableFileHelper.COMMODITY_FILE_NAME);
         if (!file.exists()) {
             return new ArrayList<>();
         }
 
-        ObjectInputStream is = new ObjectInputStream(
-                new FileInputStream(file));
-        List<CommodityPO> commodityPOs = (List<CommodityPO>) is.readObject();
-        is.close();
-        return commodityPOs;
+        try(ObjectInputStream is = new ObjectInputStream(new FileInputStream(file))){
+        	 List<CommodityPO> commodityPOs = (List<CommodityPO>) is.readObject();
+             return commodityPOs;
+        } catch (ClassNotFoundException e) {
+			throw new IOException(e);
+		}
+       
     }
 }

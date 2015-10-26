@@ -9,6 +9,6 @@ public interface CustomerDataService {
      */
     int addCustomer(CustomerPO customerPO);
 
-    CustomerPO getCustomer(int id);
+    CustomerPO getCustomerById(int id);
 
 }
