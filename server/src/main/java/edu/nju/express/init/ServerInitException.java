@@ -1,9 +1,9 @@
 package edu.nju.express.init;
 
-public class ServerInitException extends Exception{
+public class ServerInitException extends Exception {
 
-	public ServerInitException(Throwable e){
-		super(e);
-	}
-	
+    public ServerInitException(Throwable e) {
+        super(e);
+    }
+
 }

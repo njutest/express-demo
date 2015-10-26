@@ -15,8 +15,8 @@ import edu.nju.express.businesslogic.OrderBL;
 import edu.nju.express.init.RMIHelper;
 import edu.nju.express.vo.OrderReadVO;
 
-public class ShowOrderPanel extends JPanel{
-    private static final String[] TABLE_HEADER = new String[] {
+public class ShowOrderPanel extends JPanel {
+    private static final String[] TABLE_HEADER = new String[]{
             "Order ID", "Sender", "Receiver", "Commodity", "Type", "Pakcaging Fee", "Price"};
 
     private DefaultTableModel defaultTableModel;
@@ -37,16 +37,16 @@ public class ShowOrderPanel extends JPanel{
                 new AddOrderDialog(ShowOrderPanel.this).setVisible(true);
             }
         });
-        
+
         this.setLayout(new BorderLayout());
         this.add(new JScrollPane(orderListTable), BorderLayout.CENTER);
         this.add(addButton, BorderLayout.SOUTH);
     }
-    
+
     public void refresh() {
-		Object[][] orders = getOrders();
-		defaultTableModel.setDataVector(orders, TABLE_HEADER);
-	}
+        Object[][] orders = getOrders();
+        defaultTableModel.setDataVector(orders, TABLE_HEADER);
+    }
 
     private Object[][] getOrders() {
         List<OrderReadVO> expressOrders = orderBL.getExpressOrders();

@@ -10,33 +10,33 @@ import java.util.Map.Entry;
 import edu.nju.express.businesslogic.impl.OrderBLImpl;
 
 public class RMIHelper {
-	
-	private static Map<String, Class<? extends UnicastRemoteObject>> NAMING_MAP = 
-			new HashMap<String, Class<? extends UnicastRemoteObject>>();
-	
-	private static final int PORT = 1099;
-	
-	private static boolean inited = false;
-	
-	static{
-		NAMING_MAP.put("order-businesslogic", OrderBLImpl.class);
-	}
-	
+
+    private static Map<String, Class<? extends UnicastRemoteObject>> NAMING_MAP =
+            new HashMap<>();
+
+    private static final int PORT = 1099;
+
+    private static boolean inited = false;
+
+    static {
+        NAMING_MAP.put("order-businesslogic", OrderBLImpl.class);
+    }
+
     public synchronized static void init() throws ServerInitException {
-    	if(inited){
-    		return;
-    	}
+        if (inited) {
+            return;
+        }
         try {
             LocateRegistry.createRegistry(PORT);
-            for(Entry<String, Class<? extends UnicastRemoteObject>> entry: NAMING_MAP.entrySet()){
-            	String name = entry.getKey();
-            	Class<? extends UnicastRemoteObject> clazz = entry.getValue();
-            	UnicastRemoteObject proxy = clazz.newInstance();
-            	Naming.rebind(name, proxy);
+            for (Entry<String, Class<? extends UnicastRemoteObject>> entry : NAMING_MAP.entrySet()) {
+                String name = entry.getKey();
+                Class<? extends UnicastRemoteObject> clazz = entry.getValue();
+                UnicastRemoteObject proxy = clazz.newInstance();
+                Naming.rebind(name, proxy);
             }
             inited = true;
         } catch (Exception e) {
-        	throw new ServerInitException(e);
-        } 
+            throw new ServerInitException(e);
+        }
     }
 }

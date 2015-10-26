@@ -3,7 +3,7 @@ package edu.nju.express.presentation;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-public class ClientFrame extends JFrame{
+public class ClientFrame extends JFrame {
 
     public ClientFrame() {
         this.setSize(800, 300);

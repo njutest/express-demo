@@ -6,9 +6,9 @@ import edu.nju.express.po.CustomerPO;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomerDSMemoryImpl implements CustomerDataService{
-   
-	private final Map<Integer, CustomerPO> customerPOs;
+public class CustomerDSMemoryImpl implements CustomerDataService {
+
+    private final Map<Integer, CustomerPO> customerPOs;
 
     public CustomerDSMemoryImpl() {
         customerPOs = new HashMap<>();

@@ -2,8 +2,8 @@ package edu.nju.express.po;
 
 import java.io.Serializable;
 
-public class CustomerPO implements Serializable{
-	
+public class CustomerPO implements Serializable {
+
     private static final long serialVersionUID = 2044100062155888758L;
 
     private int customerId;

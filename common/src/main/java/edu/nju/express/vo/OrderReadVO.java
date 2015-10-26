@@ -4,7 +4,7 @@ import edu.nju.express.common.ExpressType;
 
 import java.io.Serializable;
 
-public class OrderReadVO implements Serializable{
+public class OrderReadVO implements Serializable {
     private static final long serialVersionUID = -5301578828182567025L;
 
     public final String barcode;

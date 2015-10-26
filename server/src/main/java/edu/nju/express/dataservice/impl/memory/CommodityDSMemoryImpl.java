@@ -6,8 +6,8 @@ import edu.nju.express.po.CommodityPO;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommodityDSMemoryImpl implements CommodityDataService{
-	
+public class CommodityDSMemoryImpl implements CommodityDataService {
+
     private final Map<Integer, CommodityPO> commodityPOs;
 
     public CommodityDSMemoryImpl() {

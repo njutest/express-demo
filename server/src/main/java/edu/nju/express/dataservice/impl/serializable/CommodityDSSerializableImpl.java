@@ -8,11 +8,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommodityDSSerializableImpl implements CommodityDataService{
+public class CommodityDSSerializableImpl implements CommodityDataService {
 
     @Override
     public synchronized int addCommodity(CommodityPO commodityPO) {
-    	Logger.info("add commodity...");
+        Logger.info("add commodity...");
         try {
             List<CommodityPO> commodityPOs = getCommodities();
             int id = commodityPOs.size();
@@ -20,14 +20,14 @@ public class CommodityDSSerializableImpl implements CommodityDataService{
             commodityPOs.add(commodityPO);
 
             File file = SerializableFileHelper.getCommodityFile();
-            try(ObjectOutputStream os = new ObjectOutputStream( new FileOutputStream(file))){
-            	os.writeObject(commodityPOs);
-            	Logger.info("success with id="+id);
-            	return id;
+            try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file))) {
+                os.writeObject(commodityPOs);
+                Logger.info("success with id=" + id);
+                return id;
             }
         } catch (IOException e) {
-        	Logger.error("fail");
-        	Logger.error(e);
+            Logger.error("fail");
+            Logger.error(e);
         }
 
         return -1;
@@ -55,12 +55,12 @@ public class CommodityDSSerializableImpl implements CommodityDataService{
             return new ArrayList<>();
         }
 
-        try(ObjectInputStream is = new ObjectInputStream(new FileInputStream(file))){
-        	 List<CommodityPO> commodityPOs = (List<CommodityPO>) is.readObject();
-             return commodityPOs;
+        try (ObjectInputStream is = new ObjectInputStream(new FileInputStream(file))) {
+            //noinspection unchecked
+            return (List<CommodityPO>) is.readObject();
         } catch (ClassNotFoundException e) {
-			throw new IOException(e);
-		}
-       
+            throw new IOException(e);
+        }
+
     }
 }

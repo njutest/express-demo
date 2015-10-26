@@ -6,7 +6,7 @@ import java.util.List;
 import edu.nju.express.vo.OrderReadVO;
 import edu.nju.express.vo.OrderWriteVO;
 
-public interface OrderBL extends Remote{
+public interface OrderBL extends Remote {
 
     void addExpressOrder(OrderWriteVO orderVO);
 

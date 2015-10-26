@@ -12,11 +12,11 @@ public abstract class DataServiceFactory {
     public abstract CustomerDataService getCustomerDataService();
 
     public abstract OrderDataService getOrderDataService();
-    
+
     protected DataServiceFactory(){}
-    
+
     public static DataServiceFactory createFactory(){
     	return new DataServiceSerializableFactory();
     }
-    
+
 }
