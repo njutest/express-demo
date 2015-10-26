@@ -6,7 +6,7 @@ public class Logger {
 		System.out.println("INFO - "+msg);
 	}
 	
-	public static void exception(Throwable e){
+	public static void error(Throwable e){
 		e.printStackTrace(System.out);
 	}
 

@@ -12,7 +12,7 @@ public class CommodityDSSerializableImpl implements CommodityDataService{
 
     @Override
     public synchronized int addCommodity(CommodityPO commodityPO) {
-    	Logger.info("add commodity");
+    	Logger.info("add commodity...");
         try {
             List<CommodityPO> commodityPOs = getCommodities();
             int id = commodityPOs.size();
@@ -27,7 +27,7 @@ public class CommodityDSSerializableImpl implements CommodityDataService{
             }
         } catch (IOException e) {
         	Logger.error("fail");
-        	Logger.exception(e);
+        	Logger.error(e);
         }
 
         return -1;
@@ -43,7 +43,7 @@ public class CommodityDSSerializableImpl implements CommodityDataService{
                 }
             }
         } catch (IOException e) {
-            Logger.exception(e);
+            Logger.error(e);
         }
         return null;
     }

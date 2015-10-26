@@ -2,6 +2,7 @@ package edu.nju.express.dataservice.impl.serializable;
 
 import edu.nju.express.dataservice.OrderDataService;
 import edu.nju.express.po.OrderPO;
+import edu.nju.express.util.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,42 +11,40 @@ import java.util.List;
 public class OrderDSSerializableImpl implements OrderDataService{
 
     @Override
-    public void addOrder(OrderPO orderPO) {
+    public synchronized void addOrder(OrderPO orderPO) {
+    	Logger.info("add order...");
         try {
             List<OrderPO> orderPOs = getOrders();
             orderPOs.add(orderPO);
 
             File file = SerializableFileHelper.getOrderFile();
-            ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream(file));
-            os.writeObject(orderPOs);
-            os.flush();
-            os.close();
+            try(ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file))){
+            	os.writeObject(orderPOs);
+            }
+            Logger.info("success");
         } catch (IOException e) {
-            e.printStackTrace();
+        	Logger.error("fail");
+        	Logger.error(e);
         }
     }
 
     @Override
     public List<OrderPO> getOrders() {
-        try {
-            File file = new File(
-                    SerializableFileHelper.DIRECTORY_PATH,
-                    SerializableFileHelper.ORDER_FILE_NAME);
-            if (!file.exists()) {
-                return new ArrayList<>();
-            }
+    	File file = new File(
+    			SerializableFileHelper.DIRECTORY_PATH,
+    			SerializableFileHelper.ORDER_FILE_NAME);
+    	if (!file.exists()) {
+    		return new ArrayList<>();
+    	}
+    	
+        try(ObjectInputStream is = new ObjectInputStream(new FileInputStream(file))){
+        	List<OrderPO> orderPOs = (List<OrderPO>) is.readObject();
+        	return orderPOs;
+        } catch (Exception e) {
+        	Logger.error(e);
+			return new ArrayList<>();
+		}
 
-            ObjectInputStream is = new ObjectInputStream(
-                    new FileInputStream(file));
-            List<OrderPO> orderPOs = (List<OrderPO>) is.readObject();
-            is.close();
-            return orderPOs;
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return new ArrayList<>();
     }
 
 }

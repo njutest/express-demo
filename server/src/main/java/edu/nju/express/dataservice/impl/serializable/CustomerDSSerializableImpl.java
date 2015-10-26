@@ -2,6 +2,7 @@ package edu.nju.express.dataservice.impl.serializable;
 
 import edu.nju.express.dataservice.CustomerDataService;
 import edu.nju.express.po.CustomerPO;
+import edu.nju.express.util.Logger;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,7 +11,8 @@ import java.util.List;
 public class CustomerDSSerializableImpl implements CustomerDataService{
 
     @Override
-    public int addCustomer(CustomerPO customerPO) {
+    public synchronized int addCustomer(CustomerPO customerPO) {
+    	Logger.info("add customer...");
         try {
             List<CustomerPO> customerPOs = getCustomers();
             int id = customerPOs.size();
@@ -18,14 +20,14 @@ public class CustomerDSSerializableImpl implements CustomerDataService{
             customerPOs.add(customerPO);
 
             File file = SerializableFileHelper.getCustomerFile();
-            ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream(file));
-            os.writeObject(customerPOs);
-            os.flush();
-            os.close();
+            try(ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file))){
+            	os.writeObject(customerPOs);
+            }
+            Logger.info("success with id="+id);
             return id;
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+        	Logger.error("fail");
+        	Logger.error(e);
         }
 
         return -1;
@@ -40,23 +42,24 @@ public class CustomerDSSerializableImpl implements CustomerDataService{
                     return customerPO;
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+        	Logger.error(e);
         }
         return null;
     }
 
-    private List<CustomerPO> getCustomers() throws IOException, ClassNotFoundException {
+    private List<CustomerPO> getCustomers() throws IOException {
         File file = new File(SerializableFileHelper.DIRECTORY_PATH,
                 SerializableFileHelper.CUSTOMER_FILE_NAME);
         if (!file.exists()) {
             return new ArrayList<>();
         }
 
-        ObjectInputStream is = new ObjectInputStream(
-                new FileInputStream(file));
-        List<CustomerPO> customerPOs = (List<CustomerPO>) is.readObject();
-        is.close();
-        return customerPOs;
+        try(ObjectInputStream is = new ObjectInputStream(new FileInputStream(file))){
+        	List<CustomerPO> customerPOs = (List<CustomerPO>) is.readObject();
+        	return customerPOs;
+        } catch (ClassNotFoundException e) {
+			throw new IOException(e);
+		}
     }
 }

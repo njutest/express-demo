@@ -5,6 +5,7 @@ import edu.nju.express.common.ExpressType;
 import java.io.Serializable;
 
 public class OrderPO implements Serializable{
+	
     private static final long serialVersionUID = 554535963678753905L;
 
     private String barcode;

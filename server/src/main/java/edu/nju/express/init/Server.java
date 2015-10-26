@@ -11,7 +11,7 @@ public class Server {
 			Logger.info("Server is now running!");
 		} catch (ServerInitException e) {
 			Logger.error("Server starts fail!");
-            Logger.exception(e);
+            Logger.error(e);
 		}
     }
 }
