@@ -1,29 +1,36 @@
 package edu.nju.express.init;
 
-import java.net.MalformedURLException;
 import java.rmi.Naming;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
-import edu.nju.express.businesslogic.OrderBL;
 import edu.nju.express.businesslogic.impl.OrderBLImpl;
 
 public class RMIHelper {
-
-    public static void init() {
+	
+	private static Map<String, Class<? extends UnicastRemoteObject>> NAMING_MAP = 
+			new HashMap<String, Class<? extends UnicastRemoteObject>>();
+	
+	private static final int PORT = 1099;
+	
+	static{
+		NAMING_MAP.put("order-businesslogic", OrderBLImpl.class);
+	}
+	
+    public static void init() throws ServerInitException {
         try {
-            LocateRegistry.createRegistry(1099);
-
-            OrderBL orderBL = new OrderBLImpl();
-
-            Naming.rebind("order-businesslogic", orderBL);
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-
-
+            LocateRegistry.createRegistry(PORT);
+            for(Entry<String, Class<? extends UnicastRemoteObject>> entry: NAMING_MAP.entrySet()){
+            	String name = entry.getKey();
+            	Class<? extends UnicastRemoteObject> clazz = entry.getValue();
+            	UnicastRemoteObject proxy = clazz.newInstance();
+            	Naming.rebind(name, proxy);
+            }
+        } catch (Exception e) {
+        	throw new ServerInitException(e);
+        } 
     }
 }

@@ -8,7 +8,8 @@ import edu.nju.express.dataservice.impl.serializable.CommodityDSSerializableImpl
 import edu.nju.express.dataservice.impl.serializable.CustomerDSSerializableImpl;
 import edu.nju.express.dataservice.impl.serializable.OrderDSSerializableImpl;
 
-public class DataServiceSerializableFactory implements DataServiceFactory{
+public class DataServiceSerializableFactory extends DataServiceFactory{
+	
     @Override
     public CommodityDataService getCommodityDataService() {
         return new CommodityDSSerializableImpl();

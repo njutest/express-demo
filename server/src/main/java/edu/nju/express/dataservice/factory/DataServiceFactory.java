@@ -4,11 +4,12 @@ import edu.nju.express.dataservice.CommodityDataService;
 import edu.nju.express.dataservice.CustomerDataService;
 import edu.nju.express.dataservice.OrderDataService;
 
-public interface DataServiceFactory {
+public abstract class DataServiceFactory {
 
-    CommodityDataService getCommodityDataService();
+    public abstract CommodityDataService getCommodityDataService();
 
-    CustomerDataService getCustomerDataService();
+    public abstract CustomerDataService getCustomerDataService();
 
-    OrderDataService getOrderDataService();
+    public abstract OrderDataService getOrderDataService();
+    
 }

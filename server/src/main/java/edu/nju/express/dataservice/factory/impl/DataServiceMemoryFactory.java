@@ -8,7 +8,7 @@ import edu.nju.express.dataservice.impl.memory.CommodityDSMemoryImpl;
 import edu.nju.express.dataservice.impl.memory.CustomerDSMemoryImpl;
 import edu.nju.express.dataservice.impl.memory.OrderDSMemoryImpl;
 
-public class DataServiceMemoryFactory implements DataServiceFactory{
+public class DataServiceMemoryFactory extends DataServiceFactory{
 
     @Override
     public CommodityDataService getCommodityDataService() {
