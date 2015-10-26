@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDSSerializableImpl implements OrderDataService{
-    public static final String ORDER_FILE_PATH = "serializable-data/orders";
 
     @Override
     public void addOrder(OrderPO orderPO) {
@@ -16,8 +15,9 @@ public class OrderDSSerializableImpl implements OrderDataService{
             List<OrderPO> orderPOs = getOrders();
             orderPOs.add(orderPO);
 
+            File file = SerializableFileHelper.getOrderFile();
             ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream(ORDER_FILE_PATH));
+                    new FileOutputStream(file));
             os.writeObject(orderPOs);
             os.flush();
             os.close();
@@ -29,13 +29,15 @@ public class OrderDSSerializableImpl implements OrderDataService{
     @Override
     public List<OrderPO> getOrders() {
         try {
-            File file = new File(ORDER_FILE_PATH);
+            File file = new File(
+                    SerializableFileHelper.DIRECTORY_PATH,
+                    SerializableFileHelper.ORDER_FILE_NAME);
             if (!file.exists()) {
                 return new ArrayList<>();
             }
 
             ObjectInputStream is = new ObjectInputStream(
-                    new FileInputStream(ORDER_FILE_PATH));
+                    new FileInputStream(file));
             List<OrderPO> orderPOs = (List<OrderPO>) is.readObject();
             is.close();
             return orderPOs;

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDSSerializableImpl implements CustomerDataService{
-    public static final String CUSTOMER_FILE_PATH = "serializable-data/customers";
 
     @Override
     public int addCustomer(CustomerPO customerPO) {
@@ -18,8 +17,9 @@ public class CustomerDSSerializableImpl implements CustomerDataService{
             customerPO.setId(id);
             customerPOs.add(customerPO);
 
+            File file = SerializableFileHelper.getCustomerFile();
             ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream(CUSTOMER_FILE_PATH));
+                    new FileOutputStream(file));
             os.writeObject(customerPOs);
             os.flush();
             os.close();
@@ -47,13 +47,14 @@ public class CustomerDSSerializableImpl implements CustomerDataService{
     }
 
     private List<CustomerPO> getCustomers() throws IOException, ClassNotFoundException {
-        File file = new File(CUSTOMER_FILE_PATH);
+        File file = new File(SerializableFileHelper.DIRECTORY_PATH,
+                SerializableFileHelper.CUSTOMER_FILE_NAME);
         if (!file.exists()) {
             return new ArrayList<>();
         }
 
         ObjectInputStream is = new ObjectInputStream(
-                new FileInputStream(CUSTOMER_FILE_PATH));
+                new FileInputStream(file));
         List<CustomerPO> customerPOs = (List<CustomerPO>) is.readObject();
         is.close();
         return customerPOs;

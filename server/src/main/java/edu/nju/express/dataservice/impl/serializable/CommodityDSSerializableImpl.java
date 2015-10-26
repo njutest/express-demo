@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommodityDSSerializableImpl implements CommodityDataService{
-    public static final String COMMODITY_FILE_PATH = "serializable-data/commodities";
 
     @Override
     public int addCommodity(CommodityPO commodityPO) {
@@ -18,8 +17,9 @@ public class CommodityDSSerializableImpl implements CommodityDataService{
             commodityPO.setId(id);
             commodityPOs.add(commodityPO);
 
+            File file = SerializableFileHelper.getCommodityFile();
             ObjectOutputStream os = new ObjectOutputStream(
-                    new FileOutputStream(COMMODITY_FILE_PATH));
+                    new FileOutputStream(file));
             os.writeObject(commodityPOs);
             os.flush();
             os.close();
@@ -47,13 +47,14 @@ public class CommodityDSSerializableImpl implements CommodityDataService{
     }
 
     private List<CommodityPO> getCommodities() throws IOException, ClassNotFoundException {
-        File file = new File(COMMODITY_FILE_PATH);
+        File file = new File(SerializableFileHelper.DIRECTORY_PATH,
+                SerializableFileHelper.COMMODITY_FILE_NAME);
         if (!file.exists()) {
             return new ArrayList<>();
         }
 
         ObjectInputStream is = new ObjectInputStream(
-                new FileInputStream(COMMODITY_FILE_PATH));
+                new FileInputStream(file));
         List<CommodityPO> commodityPOs = (List<CommodityPO>) is.readObject();
         is.close();
         return commodityPOs;
