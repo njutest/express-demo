@@ -8,22 +8,31 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 public class RMIHelper {
-    private static final String IP = "localhost";//Can be read from config file
+	
+    private static final String IP = "localhost"; //Can be read from config file
+    
+    private static boolean inited = false;
+
     private static OrderBL orderBL;
-
-    public static void init() {
+    
+    public synchronized static void init() throws ClientInitException {
+    	if(inited){
+    		return;
+    	}
+    	
         try {
-            orderBL =  (OrderBL) Naming.lookup("rmi://" + IP + "/order-businesslogic");
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        }
+            initObjects();
+            inited = true;
+        } catch (Exception e) {
+            throw new ClientInitException(e);
+        } 
     }
 
+    private static void initObjects() throws MalformedURLException, RemoteException, NotBoundException{
+    	String urlPrefix = "rmi://" + IP + "/";
+    	orderBL =  (OrderBL) Naming.lookup(urlPrefix + "order-businesslogic");
+    }
+    
     public static OrderBL getOrderBL() {
         return orderBL;
     }
