@@ -22,8 +22,6 @@ public class OrderDSMemoryImpl implements OrderDataService {
 
     @Override
     public List<OrderPO> getOrders() {
-        List<OrderPO> other = new ArrayList<>(orders.size());
-        Collections.copy(other, orders);
-        return other;
+        return new ArrayList<>(orders);
     }
 }
